@@ -1,0 +1,17 @@
+# Arquivo com erros para demonstração do compilador
+
+# ERRO SEMÂNTICO: Sensor não pode ser comandado
+automacao "Erro Sensor" {
+    quando sensor.temperatura > 25
+    entao {
+        ligar sensor.temperatura;
+    }
+}
+
+# ERRO SEMÂNTICO: Temperatura para lâmpada
+automacao "Erro Tipo" {
+    quando luz.sala == falso
+    entao {
+        ajustar luz.sala = 25C;
+    }
+}

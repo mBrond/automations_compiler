@@ -1,0 +1,85 @@
+# ════════════════════════════════════════════════════════════
+# Exemplo 1: Ligar a luz da sala ao anoitecer
+# ════════════════════════════════════════════════════════════
+automacao "Luzes da Sala ao Anoitecer" {
+    quando horario == 18:30
+    entao {
+        ligar luz.sala (brilho = 80%);
+        notificar "Luzes da sala foram ligadas automaticamente.";
+    }
+}
+
+# ════════════════════════════════════════════════════════════
+# Exemplo 2: Desligar tudo ao sair de casa
+# ════════════════════════════════════════════════════════════
+automacao "Modo Saida de Casa" {
+    quando interruptor.botao_saida == verdadeiro
+    entao {
+        desligar luz.sala;
+        desligar luz.quarto;
+        desligar luz.cozinha;
+        desligar interruptor.ar_condicionado;
+        notificar "Casa no modo ausente. Boa viagem!";
+    }
+}
+
+# ════════════════════════════════════════════════════════════
+# Exemplo 3: Controle de temperatura com condição
+# ════════════════════════════════════════════════════════════
+automacao "Controle de Temperatura" {
+    quando sensor.temperatura_sala > 28
+    se sensor.temperatura_sala > 28 e interruptor.ar_condicionado == falso
+    entao {
+        ligar clima.ar_sala;
+        ajustar clima.ar_sala = 22C;
+        notificar "Ar condicionado ligado. Temperatura estava acima de 28°C.";
+    }
+}
+
+# ════════════════════════════════════════════════════════════
+# Exemplo 4: Rotina de dormir com cena e espera
+# ════════════════════════════════════════════════════════════
+automacao "Rotina de Dormir" {
+    quando horario == 22:30
+    entao {
+        ativar cena cena.modo_dormir;
+        esperar 5min;
+        desligar luz.corredor;
+        notificar "Boa noite! Rotina de dormir ativada.";
+    }
+}
+
+# ════════════════════════════════════════════════════════════
+# Exemplo 5: Alarme de movimento com condicional
+# ════════════════════════════════════════════════════════════
+automacao "Alarme de Movimento" {
+    quando binary_sensor.sensor_movimento_entrada == verdadeiro
+    se nao interruptor.modo_casa == verdadeiro
+    entao {
+        se horario entre 22:00 e_hora 06:00
+        entao {
+            notificar "ALERTA: Movimento detectado na entrada durante a noite!";
+            ligar luz.entrada (brilho = 100%);
+        }
+        senao {
+            notificar "Movimento detectado na entrada.";
+        }
+        fim
+    }
+}
+
+# ════════════════════════════════════════════════════════════
+# Exemplo 6: Repetição para piscar luz
+# ════════════════════════════════════════════════════════════
+automacao "Piscar Luz Aviso" {
+    quando binary_sensor.sensor_porta_geladeira == verdadeiro
+    entao {
+        repetir 3 vezes {
+            ligar luz.cozinha;
+            esperar 1s;
+            desligar luz.cozinha;
+            esperar 1s;
+        }
+        notificar "Porta da geladeira ficou aberta!";
+    }
+}

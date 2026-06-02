@@ -1,0 +1,26 @@
+# Arquivo com erros sintáticos para demonstração do Modo Pânico
+
+# ERRO: falta '{' após nome
+automacao "Sem Chave"
+    quando luz.sala == verdadeiro
+    entao {
+        ligar luz.sala;
+    }
+}
+
+# ERRO: falta ';' após ação (recuperação por modo pânico)
+automacao "Sem Ponto Virgula" {
+    quando horario == 08:00
+    entao {
+        ligar luz.cozinha
+        desligar luz.sala;
+    }
+}
+
+# ERRO: operador inválido
+automacao "Operador Invalido" {
+    quando sensor.temperatura ?? 25
+    entao {
+        ligar luz.sala;
+    }
+}
