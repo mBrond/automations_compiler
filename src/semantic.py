@@ -7,7 +7,6 @@ from typing import Dict, List, Optional, Any
 from ast_nodes import *
 
 
-# ── Domínios e serviços compatíveis ─────────────────────────
 # Mapeamento: domínio → tipo_homi
 DOMINIOS = {
     "luz":          "luz",
@@ -161,7 +160,6 @@ class AnalisadorSemantico:
         for a in auto.acoes:
             self.analisar_acao(a)
 
-    # ── Gatilhos ─────────────────────────────────────────────
     def analisar_gatilho(self, g):
         if isinstance(g, (GatilhoEstado, GatilhoSensor)):
             entrada = self.tabela.registrar(g.entidade, g.linha)
@@ -174,7 +172,6 @@ class AnalisadorSemantico:
         elif isinstance(g, (GatilhoHorario, GatilhoIntervalo)):
             pass  # sem entidade para verificar
 
-    # ── Expressões ───────────────────────────────────────────
     def analisar_expressao(self, exp):
         if isinstance(exp, ExpBinaria):
             self.analisar_expressao(exp.esquerda)
@@ -199,7 +196,6 @@ class AnalisadorSemantico:
                         linha
                     )
 
-    # ── Ações ─────────────────────────────────────────────────
     def analisar_acao(self, acao):
         if isinstance(acao, AcaoLigar):
             entrada = self.tabela.registrar(acao.entidade, acao.linha)

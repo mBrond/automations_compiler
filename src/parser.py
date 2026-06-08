@@ -61,7 +61,6 @@ class Parser:
         self.pos = 0
         self.erros: List[str] = []
 
-    # ── Helpers de navegação ────────────────────────────────
     def peek(self) -> Token:
         return self.tokens[self.pos]
 
@@ -102,7 +101,6 @@ class Parser:
         if self.check(TokenType.PONTO_VIRG):
             self.advance()  # consome o ';'
 
-    # ── Ponto de entrada ────────────────────────────────────
     def parse(self) -> Programa:
         prog = Programa(linha=1)
         while not self.check(TokenType.EOF):
@@ -117,7 +115,6 @@ class Parser:
                 self.sincronizar()
         return prog
 
-    # ── Automação ────────────────────────────────────────────
     def parse_automacao(self) -> Automacao:
         tok = self.expect(TokenType.AUTOMACAO)
         nome_tok = self.expect(TokenType.STRING, "Nome da automação deve ser uma string entre aspas")
@@ -139,7 +136,6 @@ class Parser:
         self.expect(TokenType.FECHA_CHAVE, "Esperado '}' para fechar automação")
         return auto
 
-    # ── Gatilhos ─────────────────────────────────────────────
     def parse_gatilho_sec(self) -> List:
         self.expect(TokenType.QUANDO, "Esperado 'quando' para definir gatilhos")
         gatilhos = [self.parse_gatilho()]
@@ -203,7 +199,6 @@ class Parser:
         self.erro(f"Operador de comparação esperado, encontrado '{tok.valor}'", tok)
         return "=="
 
-    # ── Expressões ───────────────────────────────────────────
     def parse_expressao(self) -> Any:
         return self.parse_exp_ou()
 
@@ -267,7 +262,6 @@ class Parser:
         self.advance()
         return Literal(linha=tok.linha, valor=None, tipo="nulo")
 
-    # ── Seção de ações ───────────────────────────────────────
     def parse_acao_sec(self) -> List:
         self.expect(TokenType.ENTAO, "Esperado 'entao' para definir ações")
         self.expect(TokenType.ABRE_CHAVE, "Esperado '{' após 'entao'")
@@ -389,7 +383,6 @@ class Parser:
         return AcaoSeEntao(linha=tok.linha, condicao=cond,
                            acoes_entao=acoes_entao, acoes_senao=acoes_senao)
 
-    # ── Parâmetros e Valores ─────────────────────────────────
     def parse_param_list(self) -> dict:
         self.expect(TokenType.ABRE_PAR)
         params = {}

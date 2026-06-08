@@ -95,10 +95,6 @@ def _servico_desligar(entity_id: str) -> str:
     return mapa_desligar.get(dom, "homeassistant.turn_off")
 
 
-def _op_ha(op: str) -> str:
-    mapa = {"==": "=", "!=": "!=", ">": ">", "<": "<", ">=": ">=", "<=": "<="}
-    return mapa.get(op, op)
-
 
 class GeradorYAML:
     """Gera YAML compatível com Home Assistant a partir da AST."""
@@ -139,7 +135,6 @@ class GeradorYAML:
         lines.append("  mode: single")
         return "\n".join(lines)
 
-    # ── Gatilhos ─────────────────────────────────────────────
     def gerar_gatilho(self, g) -> List[str]:
         lines = []
         if isinstance(g, GatilhoEstado):
@@ -176,7 +171,6 @@ class GeradorYAML:
 
         return lines
 
-    # ── Condições ─────────────────────────────────────────────
     def gerar_condicao(self, exp, indent=4) -> List[str]:
         pad = "  " * indent
         lines = []
@@ -225,7 +219,6 @@ class GeradorYAML:
 
         return lines
 
-    # ── Ações ─────────────────────────────────────────────────
     def gerar_acao(self, acao, indent=2) -> List[str]:
         pad = "  " * indent
         lines = []

@@ -63,7 +63,6 @@ print("\n═══════════════════════�
 print("  Homi Compiler — Suite de Testes")
 print("══════════════════════════════════════════\n")
 
-# ── Testes Léxicos ────────────────────────────────────────
 print("─── Análise Léxica ───────────────────────")
 
 test("Token entity_id simples",
@@ -88,7 +87,6 @@ test("Caractere inválido gera erro léxico",
      'automacao "X" { quando @ == verdadeiro entao { ligar luz.sala; } }',
      esperado_erros_lex=1, esperado_erros_sin=3)
 
-# ── Testes Sintáticos ─────────────────────────────────────
 print("\n─── Análise Sintática ────────────────────")
 
 test("Automação completa válida",
@@ -113,7 +111,6 @@ test("Falta ';' (recuperação modo pânico)",
      'automacao "Err" { quando horario == 08:00 entao { ligar luz.sala desligar luz.quarto; } }',
      esperado_erros_sin=1)
 
-# ── Testes Semânticos ─────────────────────────────────────
 print("\n─── Análise Semântica ────────────────────")
 
 test("Sensor não pode ser ligado",
@@ -136,7 +133,6 @@ test("Condição com operador em sensor binário inválido",
      'automacao "X" { quando binary_sensor.porta == verdadeiro se binary_sensor.porta > 1 entao { ligar luz.sala; } }',
      esperado_erros_sem=1)
 
-# ── Testes de Geração YAML ────────────────────────────────
 print("\n─── Geração de Código YAML ───────────────")
 
 test("Trigger por horário",
@@ -163,7 +159,6 @@ test("Ativar cena",
      'automacao "Cena" { quando horario == 22:00 entao { ativar cena cena.modo_dormir; } }',
      yaml_contem=["scene.turn_on", "scene.modo_dormir"])
 
-# ── Resumo ────────────────────────────────────────────────
 total = passou + falhou
 print(f"\n══════════════════════════════════════════")
 print(f"  Resultado: {cor(str(passou), 'verde')} passed, {cor(str(falhou), 'vermelho')} failed / {total} total")

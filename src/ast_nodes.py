@@ -6,12 +6,10 @@ from typing import List, Optional, Any
 class ASTNode:
     linha: int = 0
 
-# ── Programa ────────────────────────────────────────────────
 @dataclass
 class Programa(ASTNode):
     automacoes: List["Automacao"] = field(default_factory=list)
 
-# ── Automação ────────────────────────────────────────────────
 @dataclass
 class Automacao(ASTNode):
     nome: str = ""
@@ -19,7 +17,6 @@ class Automacao(ASTNode):
     condicoes: Optional["Expressao"] = None
     acoes: List["Acao"] = field(default_factory=list)
 
-# ── Gatilhos ─────────────────────────────────────────────────
 @dataclass
 class GatilhoEstado(ASTNode):
     """quando dispositivo muda para estado"""
@@ -46,7 +43,6 @@ class GatilhoSensor(ASTNode):
 
 Gatilho = GatilhoEstado | GatilhoHorario | GatilhoIntervalo | GatilhoSensor
 
-# ── Expressões (condições) ───────────────────────────────────
 @dataclass
 class ExpBinaria(ASTNode):
     esquerda: Any = None
@@ -71,7 +67,6 @@ class Literal(ASTNode):
 
 Expressao = ExpBinaria | ExpUnaria | ExpEntidade | Literal
 
-# ── Ações ────────────────────────────────────────────────────
 @dataclass
 class AcaoLigar(ASTNode):
     entidade: str = ""

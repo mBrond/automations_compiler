@@ -30,8 +30,7 @@ def compilar(source: str, verbose=False, mostrar_tokens=False, mostrar_ast=False
 
     print(BANNER)
 
-    # ── FASE 1: Análise Léxica ───────────────────────────────
-    print("━━━ Fase 1: Análise Léxica ━━━━━━━━━━━━━━━━━━━━━━━━━")
+    print("Fase 1: Análise Léxica")
     lexer = Lexer(source)
     tokens = lexer.tokenize()
 
@@ -40,7 +39,7 @@ def compilar(source: str, verbose=False, mostrar_tokens=False, mostrar_ast=False
             print(f"  {e}")
         erros_total.extend(lexer.erros)
     else:
-        print(f"  ✓ {len(tokens)-1} tokens reconhecidos sem erros.")
+        print(f"  {len(tokens)-1} tokens reconhecidos sem erros.")
 
     if mostrar_tokens:
         print("\n  Tokens:")
@@ -48,8 +47,7 @@ def compilar(source: str, verbose=False, mostrar_tokens=False, mostrar_ast=False
             if tok.tipo != TokenType.EOF:
                 print(f"    {tok}")
 
-    # ── FASE 2: Análise Sintática ────────────────────────────
-    print("\n━━━ Fase 2: Análise Sintática ━━━━━━━━━━━━━━━━━━━━━━")
+    print("Fase 2: Análise Sintática ")
     parser = Parser(tokens)
     ast = parser.parse()
 
@@ -58,14 +56,13 @@ def compilar(source: str, verbose=False, mostrar_tokens=False, mostrar_ast=False
             print(f"  {e}")
         erros_total.extend(parser.erros)
     else:
-        print(f"  ✓ {len(ast.automacoes)} automação(ões) reconhecida(s) sem erros.")
+        print(f"  {len(ast.automacoes)} automação(ões) reconhecida(s) sem erros.")
 
     if mostrar_ast:
         print("\n  AST:")
         _print_ast(ast)
 
-    # ── FASE 3: Análise Semântica ────────────────────────────
-    print("\n━━━ Fase 3: Análise Semântica ━━━━━━━━━━━━━━━━━━━━━━")
+    print("Fase 3: Análise Semântica")
     semantico = AnalisadorSemantico()
     semantico.analisar(ast)
 
@@ -78,13 +75,12 @@ def compilar(source: str, verbose=False, mostrar_tokens=False, mostrar_ast=False
             print(f"  {e}")
         erros_total.extend(semantico.erros)
     else:
-        print(f"  ✓ Análise semântica concluída sem erros.")
+        print(f" Análise semântica concluída sem erros.")
 
     if verbose:
         print(f"\n{semantico.tabela}")
 
-    # ── FASE 4: Geração de Código ────────────────────────────
-    print("\n━━━ Fase 4: Geração de Código (YAML) ━━━━━━━━━━━━━━━")
+    print("Fase 4: Geração de Código (YAML) ")
     if erros_total:
         print(f"  ✗ Geração de código abortada: {len(erros_total)} erro(s) encontrado(s).")
         print(f"\n  Resumo de erros:")
@@ -94,7 +90,7 @@ def compilar(source: str, verbose=False, mostrar_tokens=False, mostrar_ast=False
 
     gerador = GeradorYAML()
     yaml_out = gerador.gerar(ast)
-    print(f"  ✓ YAML gerado com sucesso.")
+    print(f" YAML gerado com sucesso.")
     return yaml_out, []
 
 
