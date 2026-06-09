@@ -119,7 +119,7 @@ DFA manual com os estados:
 - `temperatura`: reconhecido pelo sufixo `C` após número
 - `time_value`: reconhecido pelo padrão `NN:NN`
 
-### 2. Análise Sintática (`src/parser.py`)
+### 2. Análise Sintática (`src/homi_parser.py`)
 
 Parser **LL(1)** baseado em tabela preditiva.
 
@@ -194,3 +194,51 @@ O compilador detecta e reporta erros em todas as fases:
 ```bash
 python tests/test_compiler.py
 ```
+
+
+### Interface Gráfica (`src/GUI.py`)
+
+#### Objetivo
+
+Foi desenvolvida uma interface gráfica utilizando a biblioteca Kivy com o objetivo de facilitar a visualização e a depuração das diferentes fases do compilador Homi.
+
+#### Funcionalidades
+
+A interface permite:
+
+* Carregar arquivos fonte `.homi`;
+* Executar o processo de compilação;
+* Visualizar os tokens gerados pela análise léxica;
+* Inspecionar a Árvore Sintática Abstrata (AST);
+* Consultar mensagens de erro e avisos;
+* Visualizar a tabela de símbolos produzida pela análise semântica.
+
+#### Organização das Telas
+
+A aplicação é dividida em telas independentes, cada uma responsável por apresentar os resultados de uma etapa específica da compilação:
+
+1. **Análise Léxica** – exibe os tokens reconhecidos e possíveis erros léxicos;
+2. **Análise Sintática** – apresenta a AST gerada e erros sintáticos encontrados;
+3. **Análise Semântica** – mostra a tabela de símbolos, avisos e erros semânticos.
+
+#### Visualização da AST
+
+Foi implementado um componente gráfico para exibição da Árvore Sintática Abstrata. Os nós são organizados hierarquicamente e conectados por arestas, permitindo a exploração visual da estrutura do programa. A ferramenta suporta zoom e navegação pela árvore.
+
+#### Benefícios
+
+A interface gráfica auxilia na validação do compilador, simplifica a identificação de erros e facilita a compreensão das estruturas internas produzidas durante o processo de compilação.
+
+#### Capturas de Tela
+
+A Figura 1 apresenta a tela de Análise Léxica da interface gráfica, na qual são exibidos os tokens reconhecidos pelo compilador, juntamente com informações de linha, coluna e eventuais erros léxicos.
+
+![Figura 1 – Tela de Análise Léxica](img/GUI_analise_lexica.png)
+
+*Figura 1 – Visualização da fase de análise léxica.*
+
+A Figura 2 apresenta a visualização gráfica da Árvore Sintática Abstrata (AST), permitindo inspecionar a estrutura hierárquica produzida pelo parser LL(1).
+
+![Figura 2 – Visualização da AST](img/GUI_AST.png)
+
+*Figura 2 – Visualização da Árvore Sintática Abstrata (AST).*

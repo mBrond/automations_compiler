@@ -36,7 +36,7 @@ from kivy.uix.scrollview import ScrollView
 
 from ast_nodes import *
 from lexer import Lexer, TokenType
-from parser import Parser
+from homi_parser import Parser
 from semantic import AnalisadorSemantico
 from textwrap import wrap
 

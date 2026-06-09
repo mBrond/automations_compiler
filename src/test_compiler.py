@@ -7,7 +7,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent / "src"))
 
 from lexer import Lexer, TokenType
-from parser import Parser
+from automations_compiler.src.homi_parser import Parser
 from semantic import AnalisadorSemantico
 from codegen import GeradorYAML
 
